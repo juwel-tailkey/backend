@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => array_filter([
-        env('CLIENT_ORIGIN', 'http://localhost:5173'),
+        'http://localhost:5173','http://34.150.126.247:8080','http://34.150.126.247'
     ]),
 
     'allowed_origins_patterns' => [],
