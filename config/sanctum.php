@@ -2,6 +2,8 @@
 
 use Laravel\Sanctum\Sanctum;
 
+$frontend = require __DIR__.'/frontend.php';
+
 return [
 
     /*
@@ -15,11 +17,17 @@ return [
     |
     */
 
-    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
-        '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,34.150.126.247:8080,34.150.126.247,::1',
-        Sanctum::currentApplicationUrlWithPort()
-    ))),
+    'stateful' => array_values(array_unique(array_filter(array_merge(
+        // Shared first-party SPA hosts (config/frontend.php). Merged in so a
+        // stale SANCTUM_STATEFUL_DOMAINS env value cannot drop these hosts and
+        // reintroduce the "Session store not set on request." error.
+        $frontend['stateful'],
+        array_map('trim', explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
+            '%s%s',
+            'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
+            Sanctum::currentApplicationUrlWithPort()
+        ))))
+    )))),
 
     /*
     |--------------------------------------------------------------------------
