@@ -39,6 +39,7 @@ return [
         // running the sync queue driver). Set to false once endpoint_url
         // points at a real service, or once jobs run via `queue:work`.
         'use_local_dummy' => env('CUSTOM_MODEL_USE_LOCAL_DUMMY', true),
+        'access_key' => env('CUSTOM_MODEL_ACCESS_KEY'),
     ],
 
 ];

@@ -52,6 +52,7 @@ class TriggerCustomModelReportJob implements ShouldQueue
 
         try {
             $response = Http::timeout(10)->post($endpointUrl, [
+                'access_key' => config('services.custom_model_report.access_key'),
                 'report_generator_id' => $generator->id,
                 'report_id' => $generator->report_id,
                 'project_id' => $generator->project_id,
